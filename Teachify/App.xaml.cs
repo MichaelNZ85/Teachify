@@ -1,5 +1,6 @@
 ﻿using System;
 using Teachify.Pages;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,8 +11,14 @@ namespace Teachify
         public App()
         {
             InitializeComponent();
-
-            MainPage = new NavigationPage(new LoginPage());
+            if (!string.IsNullOrEmpty(Preferences.Get("accesstoken", "")))
+            {
+                MainPage = new MasterPage();
+            }
+            else if ((string.IsNullOrEmpty(Preferences.Get("useremail","")) && (string.IsNullOrEmpty(Preferences.Get("password", "")))))
+            {
+                MainPage = new NavigationPage(new LoginPage());
+            }
         }
 
         protected override void OnStart()
