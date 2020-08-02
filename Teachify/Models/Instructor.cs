@@ -26,7 +26,7 @@ namespace Teachify.Models
         {
             get
             {
-                return String.Format("https://teachify-michael.azurewebsites.net/{0}", ImagePath.Substring(1));
+                return ImagePath;
             }
         }
         public object UserId { get; set; }

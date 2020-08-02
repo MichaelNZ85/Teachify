@@ -1,35 +1,46 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Teachify.Pages.HomePage">
-    <ContentPage.Content>
-        <ListView x:Name="LvInstructors" SeparatorVisibility="None" HasUnevenRows="True">
-            <ListView.ItemTemplate>
-                <DataTemplate>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="Teachify.Pages.HomePage">
+    <ContentPage.Content> 
+        <Grid>
+            <ListView x:Name="LvInstructors" ItemSelected="LvInstructors_ItemSelected" SeparatorVisibility="None" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
                     <ViewCell>
                         <Frame Padding="5">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="100"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0.33*"/>
                                     <RowDefinition Height="0.33*"/>
                                     <RowDefinition Height="0.33*"/>
                                 </Grid.RowDefinitions>
-                                <Image Source="{Binding FullLogoPath}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"/>
-                                <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1"/>
+                                <Image Source="{Binding ImagePath}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"/>
+                                    <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"
+			                            WidthRequest="300" HeightRequest="300"
+			                            DownsampleToViewSize="true"
+			                            Source = "http://loremflickr.com/600/600/nature?filename=simple.jpg">
+                                    </ffimageloading:CachedImage>
+                                    <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="1"/>
                                 <Label Text="{Binding Experience}" Grid.Row="1" Grid.Column="1"/>
                                 <Label Text="{Binding CourseDomain}" Grid.Row="2" Grid.Column="1"/>
                                 <Label Text="{Binding HourlyRate}" Grid.Row="0" Grid.Column="2"/>
-                                <Label Text="{Binding City}" Grid.Row="1" Grid.Column="1"/>
+                                <Label Text="{Binding City}" Grid.Row="1" Grid.Column="2"/>
 
 
                             </Grid>
                         </Frame>
                     </ViewCell>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ActivityIndicator HorizontalOptions="Center" VerticalOptions="Center" Color="#340E22" IsRunning="True" x:Name="BusyIndicator"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

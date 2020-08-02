@@ -10,21 +10,38 @@ namespace Teachify.Pages
     public partial class HomePage : ContentPage
     {
         public ObservableCollection<Instructor> Instructors;
+        private bool First = true;
         public HomePage()
         {
             InitializeComponent();
+            Instructors = new ObservableCollection<Instructor>();
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            ApiService apiService = new ApiService();
-            var instructors = await apiService.GetInstructors();
-            foreach (var instructor in instructors)
+            if (First)
             {
-                Instructors.Add(instructor);
+                ApiService apiService = new ApiService();
+                var instructors = await apiService.GetInstructors();
+                foreach (var instructor in instructors)
+                {
+                    Instructors.Add(instructor);
+                }
+                LvInstructors.ItemsSource = Instructors;
+                BusyIndicator.IsRunning = false;
             }
-            LvInstructors.ItemsSource = Instructors;
+            First = false;
+        }
+
+        private void LvInstructors_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var selectedInstructor = e.SelectedItem as Instructor;
+            if (selectedInstructor != null)
+            {
+                Navigation.PushAsync(new InstructorProfilePage(selectedInstructor.Id));
+            }
+            ((ListView)sender).SelectedItem = null;
         }
     }
 }
